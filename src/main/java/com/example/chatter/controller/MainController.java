@@ -1,4 +1,4 @@
-package com.example.chatter;
+package com.example.chatter.controller;
 
 import com.example.chatter.domain.Message;
 import com.example.chatter.repos.MessageRepo;
@@ -10,16 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class GreetingController {
+public class MainController {
     @Autowired
     private MessageRepo messageRepo;
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
+    @GetMapping("/")
+    public String greeting(Model model) {
         return "greeting";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Model model)
     {
         Iterable<Message> messages = messageRepo.findAll();
@@ -27,7 +26,7 @@ public class GreetingController {
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String post(@RequestParam String text, @RequestParam(defaultValue = "noneTag") String tag, Model model)
     {
         if(text != null && !text.equals(""))
