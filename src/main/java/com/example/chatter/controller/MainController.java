@@ -1,8 +1,10 @@
 package com.example.chatter.controller;
 
 import com.example.chatter.domain.Message;
+import com.example.chatter.domain.User;
 import com.example.chatter.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,11 +29,11 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String post(@RequestParam String text, @RequestParam(defaultValue = "noneTag") String tag, Model model)
+    public String post(@AuthenticationPrincipal User user, @RequestParam String text, @RequestParam(defaultValue = "noneTag") String tag, Model model)
     {
         if(text != null && !text.equals(""))
         {
-            Message message = new Message(text,tag);
+            Message message = new Message(text,tag, user);
             messageRepo.save(message);
         }
         Iterable<Message> messages = messageRepo.findAll();
