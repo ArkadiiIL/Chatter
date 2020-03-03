@@ -3,6 +3,7 @@
 <@c.page>
     <div>
         <@l.logout/>
+        <span><a href="/user">User List</a> </span>
     </div>
 <div>
     <form method="post">
@@ -13,7 +14,7 @@
     </form>
 </div>
 <form method="get" action="/main">
-    <input type="text" name="filter" value="${filter}">
+    <input type="text" name="filter" value="${filter?ifExists}">
     <button type="submit">Search</button>
 </form>
 <div>Messages</div>
