@@ -3,5 +3,5 @@
 <@c.page>
 Add new User
 ${message?ifExists}
-<@l.login "/registration" />
+<@l.login "/registration" true/>
 </@c.page>
