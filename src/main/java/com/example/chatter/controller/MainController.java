@@ -4,17 +4,26 @@ import com.example.chatter.domain.Message;
 import com.example.chatter.domain.User;
 import com.example.chatter.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 public class MainController {
     @Autowired
     private MessageRepo messageRepo;
+
+    @Value("${upload.path}")
+    private String uploadPath;
     @GetMapping("/")
     public String greeting(Model model) {
         return "greeting";
@@ -34,11 +43,26 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String post(@AuthenticationPrincipal User user, @RequestParam String text, @RequestParam(defaultValue = "noneTag") String tag, Model model)
-    {
-        if(text != null && !text.equals(""))
+    public String post(@AuthenticationPrincipal User user,
+                       @RequestParam String text,
+                       @RequestParam(defaultValue = "noneTag") String tag,
+                       Model model,
+                       @RequestParam("file") MultipartFile file) throws IOException {
+        if((text != null && !text.equals("")) || !file.getOriginalFilename().isEmpty())
         {
             Message message = new Message(text,tag, user);
+            if(!file.getOriginalFilename().isEmpty())
+            {
+
+                File uploadDir = new File(uploadPath);
+                if(!uploadDir.exists()) uploadDir.mkdir();
+                String uuidFile = UUID.randomUUID().toString();
+                String resultFileName = uuidFile + "." + file.getOriginalFilename();
+                file.transferTo(new File(uploadPath + "/" + resultFileName));
+                message.setFilename(resultFileName);
+
+            }
+
             messageRepo.save(message);
         }
         Iterable<Message> messages = messageRepo.findAll();
