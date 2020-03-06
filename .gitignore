@@ -2,3 +2,4 @@
 .idea/
 out
 uploads
+src/main/resources/application.properties

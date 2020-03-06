@@ -2,5 +2,6 @@
 <#import "parts/login.ftlh" as l>
 <@c.page>
 <div class="mb-1">Login page</div>
+${message?ifExists}
 <@l.login "/login" false/>
 </@c.page>
