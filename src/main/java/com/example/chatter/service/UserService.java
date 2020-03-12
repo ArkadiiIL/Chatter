@@ -4,6 +4,7 @@ import com.example.chatter.domain.Role;
 import com.example.chatter.domain.User;
 import com.example.chatter.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +23,8 @@ public class UserService implements UserDetailsService {
     private MailSender mailSender;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Value("${hostname}")
+    private String hostname;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
@@ -45,7 +48,7 @@ public class UserService implements UserDetailsService {
 
     private void sendMessage(User user) {
         String message = String.format("Hello %s! \n" +
-                "Please visit next link for activation your account: http://localhost:8080/activate/%s",user.getUsername(),user.getActivationCode());
+                "Please visit next link for activation your account: http://%s/activate/%s",hostname,user.getUsername(),user.getActivationCode());
         mailSender.send(user.getEmail(),"Activation code",message);
     }
 
@@ -57,8 +60,6 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActivationCode(null);
-        user.setPassword2(user.getPassword());
-
         userRepo.save(user);
 
         return true;

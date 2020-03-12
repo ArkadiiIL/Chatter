@@ -53,6 +53,14 @@
                 </#if>
             </div>
         </div>
+            <div class="col-sm-6">
+                <div class="g-recaptcha" data-sitekey="6LfK2OAUAAAAAERh3cd_voXCVZi1XcyhWTCReWVt"></div>
+                <#if captchaError??>
+                    <div class="alert alert-danger" role="alert">
+                        ${captchaError}
+                    </div>
+                </#if>
+            </div>
         </#if>
         <#if !isRegisterForm><a href="/registration">Registration</a> </#if>
         <button type="submit" class="btn btn-light"><#if isRegisterForm>Create <#else>Sign In</#if></button>
