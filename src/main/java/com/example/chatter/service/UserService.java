@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
 
     private void sendMessage(User user) {
         String message = String.format("Hello %s! \n" +
-                "Please visit next link for activation your account: http://%s/activate/%s",hostname,user.getUsername(),user.getActivationCode());
+                "Please visit next link for activation your account: http://%s/activate/%s",user.getUsername(),hostname,user.getActivationCode());
         mailSender.send(user.getEmail(),"Activation code",message);
     }
 
