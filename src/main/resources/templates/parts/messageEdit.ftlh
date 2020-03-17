@@ -5,7 +5,7 @@
     <div class="form-group mt-3">
         <form method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}"
+                <input type="text" class="form-control ${(textError??)?string('is-invalid', '')} /"
                        value="<#if message??>${message.text}</#if>" name="text" placeholder="Enter message" />
                 <#if textError??>
                     <div class="invalid-feedback">
@@ -15,7 +15,7 @@
             </div>
             <div class="form-group">
                 <input type="text" class="form-control ${(tagError??)?string('is-invalid', '')}"
-                       value="<#if message??>${message.tag}</#if>" name="tag" placeholder="Tag">
+                       value="<#if message??>${message.tag}</#if>" name="tag" placeholder="Tag" />
                 <#if tagError??>
                     <div class="invalid-feedback">
                         ${tagError}
@@ -24,15 +24,15 @@
             </div>
             <div class="form-group">
                 <div class="custom-file">
-                    <input type="file" name="file" id="customFile">
+                    <input type="file" name="file" id="customFile" />
                     <label class="custom-file-label" for="customFile">Choose File</label>
                 </div>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-light">Save messages</button>
             </div>
-            <input type="hidden" name="id" value="<#if message??>${message.id}</#if>">
-            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input type="hidden" name="id" value="<#if message??>${message.id}</#if>" />
+            <input type="hidden" name="_csrf" value="${_csrf.token}" />
         </form>
     </div>
 </div>

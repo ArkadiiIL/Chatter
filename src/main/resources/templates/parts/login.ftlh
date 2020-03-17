@@ -64,13 +64,13 @@
         </#if>
         <#if !isRegisterForm><a href="/registration">Registration</a> </#if>
         <button type="submit" class="btn btn-light"><#if isRegisterForm>Create <#else>Sign In</#if></button>
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
     </form>
 </#macro>
 
 <#macro logout>
     <form action="/logout" method="post">
         <button type="submit" class="btn btn-light"><#if user??>Sign out<#else>Log in</#if></button>
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
     </form>
 </#macro>
