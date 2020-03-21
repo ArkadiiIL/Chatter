@@ -1,6 +1,6 @@
 package com.example.chatter;
 
-import com.example.chatter.controller.MainController;
+import com.example.chatter.controller.MessagesController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class MainControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private MainController controller;
+    private MessagesController controller;
 
     @Test
     public void mainPageTest() throws Exception
